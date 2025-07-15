@@ -1,0 +1,121 @@
+{
+  "associatedLayout": "Overworld",
+  "name": "UpdateInventory",
+  "events": [
+    {
+      "type": "BuiltinCommonInstructions::Standard",
+      "conditions": [],
+      "actions": [
+        {
+          "type": {
+            "value": "Delete"
+          },
+          "parameters": [
+            "InventoryIcon",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "type": "BuiltinCommonInstructions::Standard",
+      "conditions": [],
+      "actions": [],
+      "events": [
+        {
+          "type": "BuiltinCommonInstructions::Repeat",
+          "repeatExpression": "VariableChildCount(Inventory)",
+          "conditions": [],
+          "actions": [],
+          "events": [
+            {
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [
+                {
+                  "type": {
+                    "value": "StringVariable"
+                  },
+                  "parameters": [
+                    "Inventory[SlotNumber].Name",
+                    "!=",
+                    "\"Empty\""
+                  ]
+                },
+                {
+                  "type": {
+                    "value": "NumberObjectVariable"
+                  },
+                  "parameters": [
+                    "InventorySlot",
+                    "SlotNumber",
+                    "=",
+                    "SlotNumber"
+                  ]
+                }
+              ],
+              "actions": [
+                {
+                  "type": {
+                    "value": "Create"
+                  },
+                  "parameters": [
+                    "",
+                    "InventoryIcon",
+                    "InventorySlot.X()+25",
+                    "InventorySlot.Y()+25",
+                    "\"UI\""
+                  ]
+                },
+                {
+                  "type": {
+                    "value": "InventoryIconDisplay::InventoryIcon::SetName"
+                  },
+                  "parameters": [
+                    "InventoryIcon",
+                    "=",
+                    "Inventory[SlotNumber].Name",
+                    ""
+                  ]
+                },
+                {
+                  "type": {
+                    "value": "ScalableCapability::ScalableBehavior::SetValue"
+                  },
+                  "parameters": [
+                    "InventoryIcon",
+                    "Scale",
+                    "=",
+                    "3.125"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BuiltinCommonInstructions::Standard",
+              "conditions": [],
+              "actions": [
+                {
+                  "type": {
+                    "value": "SetNumberVariable"
+                  },
+                  "parameters": [
+                    "SlotNumber",
+                    "+",
+                    "1"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "name": "SlotNumber",
+          "type": "number",
+          "value": 0
+        }
+      ]
+    }
+  ]
+}
